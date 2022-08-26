@@ -35,7 +35,7 @@
       harpKeyLabel.innerHTML = "S.D.";
       songKey.value = "";
     } else {
-      harpKeyLabel.innerHTML = data.harpKeys[harpKeyValue][4];
+      harpKeyLabel.innerHTML = data.harpKeys[harpKeyValue][8];
       switch (positionValue) {
         case "4":
           songKey.value = parseKey(data.harpKeys[harpKeyValue][23]);
