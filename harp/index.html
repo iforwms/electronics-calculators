@@ -12,38 +12,7 @@
         </div>
 
         <div class="mt-6 max-w-md mx-auto">
-            <div class="border-b pb-4 flex items-center">
-                <div class="">
-                    <label class="text-xs font-bold ml-2 block">Harp Key</label>
-                    <select class="w-36 bg-white mt-1 border rounded-full text-sm px-3 border-green-500 py-1" id="harp_key">
-                        <option selected value="sd">Scale Degrees</option>
-                        <option value="c">C</option>
-                        <option value="d">D</option>
-                        <option value="e">E</option>
-                        <option value="f">F</option>
-                        <option value="g">G</option>
-                        <option value="a">A</option>
-                        <option value="b">B</option>
-                        <option value="bb">B&#9837; / A&#9839;</option>
-                        <option value="eb">E&#9837; / D&#9839;</option>
-                        <option value="ab">A&#9837; / G&#9839;</option>
-                        <option value="db">D&#9837; / C&#9839;</option>
-                        <option value="gb">G&#9837; / F&#9839;</option>
-                    </select>
-                </div>
-
-                <div class="ml-4">
-                    <label class="text-xs font-bold ml-2 block">Harp Position</label>
-                    <select class="bg-white border w-48 rounded-full text-sm mt-1 px-3 border-green-500 py-1" id="position">
-                        <option selected value="1">First (Ionian)</option>
-                        <option value="2">Second (Mixolydian)</option>
-                        <option value="3">Third (Dorian)</option>
-                        <option value="4">Fourth (Aeolian)</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="flex mt-2">
+            <div class="border-b pb-4 flex justify-center items-center">
                 <div class="">
                     <label class="text-xs ml-2 font-bold block">Song Key</label>
                     <select id="song_key" class="w-36 bg-white mt-1 border rounded-full text-sm px-3 border-blue-500 py-1">
@@ -74,7 +43,38 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-12 mt-8">
+            <div class="justify-center flex mt-2">
+                <div class="">
+                    <label class="text-xs font-bold ml-2 block">Harp Key</label>
+                    <select class="w-36 bg-white mt-1 border rounded-full text-sm px-3 border-green-500 py-1" id="harp_key">
+                        <option selected value="sd">Scale Degrees</option>
+                        <option value="c">C</option>
+                        <option value="d">D</option>
+                        <option value="e">E</option>
+                        <option value="f">F</option>
+                        <option value="g">G</option>
+                        <option value="a">A</option>
+                        <option value="b">B</option>
+                        <option value="bb">B&#9837; / A&#9839;</option>
+                        <option value="eb">E&#9837; / D&#9839;</option>
+                        <option value="ab">A&#9837; / G&#9839;</option>
+                        <option value="db">D&#9837; / C&#9839;</option>
+                        <option value="gb">G&#9837; / F&#9839;</option>
+                    </select>
+                </div>
+
+                <div class="ml-4">
+                    <label class="text-xs font-bold ml-2 block">Harp Position</label>
+                    <select class="bg-white border w-48 rounded-full text-sm mt-1 px-3 border-green-500 py-1" id="position">
+                        <option selected value="1">First (Ionian)</option>
+                        <option value="2">Second (Mixolydian)</option>
+                        <option value="3">Third (Dorian)</option>
+                        <option value="4">Fourth (Aeolian)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 mt-12">
                 <div id="note_0" class="note col-start-11 bend border-r border-t"></div>
 
                 <div id="note_1" class="border-t note col-start-2 border-r overbend"></div>
@@ -141,31 +141,35 @@
                 <div id="note_38" class="note col-start-4 bend border-b border-r"></div>
             </div>
 
-            <div class="mt-8 text-sm">
-                <div class="flex items-center">
-                    <div class="h-6 w-6 border border-gray-700 rounded"></div>
-                    <div class="ml-2">Standard Note</div>
-                </div>
-                <div class="mt-2 flex items-center">
-                    <div class="h-6 w-6 border bg-orange-100 border-gray-700 rounded"></div>
-                    <div class="ml-2">Bend</div>
-                </div>
-                <div class="mt-2 flex items-center">
-                    <div class="h-6 w-6 border bg-orange-300 border-gray-700 rounded"></div>
-                    <div class="ml-2">Overbend</div>
+            <div class="mt-8 items-center justify-center flex text-sm">
+                <div class="">
+                    <div class="flex items-center">
+                        <div class="h-6 w-6 border border-gray-700 rounded"></div>
+                        <div class="ml-2">Standard Note</div>
+                    </div>
+                    <div class="mt-2 flex items-center">
+                        <div class="h-6 w-6 border bg-orange-100 border-gray-700 rounded"></div>
+                        <div class="ml-2">Bend</div>
+                    </div>
+                    <div class="mt-2 flex items-center">
+                        <div class="h-6 w-6 border bg-orange-300 border-gray-700 rounded"></div>
+                        <div class="ml-2">Overbend</div>
+                    </div>
                 </div>
 
-                <div class="mt-4 flex items-center">
-                    <div class="h-6 w-6 rounded bg-red-500"></div>
-                    <div class="ml-2">I - Tonic/Root</div>
-                </div>
-                <div class="mt-2 flex items-center">
-                    <div class="h-6 w-6 rounded bg-green-500"></div>
-                    <div class="ml-2">IV - Sub-Dominant</div>
-                </div>
-                <div class="mt-2 flex items-center">
-                    <div class="h-6 w-6 rounded bg-blue-500"></div>
-                    <div class="ml-2">V - Dominant</div>
+                <div class="ml-24">
+                    <div class="flex items-center">
+                        <div class="h-6 w-6 border-gray-700 border rounded bg-red-500"></div>
+                        <div class="ml-2">I - Tonic/Root</div>
+                    </div>
+                    <div class="mt-2 flex items-center">
+                        <div class="h-6 w-6 border-gray-700 border rounded bg-green-500"></div>
+                        <div class="ml-2">IV - Sub-Dominant</div>
+                    </div>
+                    <div class="mt-2 flex items-center">
+                        <div class="h-6 w-6 border-gray-700 border rounded bg-blue-500"></div>
+                        <div class="ml-2">V - Dominant</div>
+                    </div>
                 </div>
             </div>
         </div>
