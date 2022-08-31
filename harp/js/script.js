@@ -17,16 +17,40 @@
     return newKey;
   }
 
-  function keyFromPosition(value, key) {
+  function songKeyFromPosition(value, key) {
+    // console.log('song key', value, key, data.harpKeys[key]);
     switch (value) {
       case "12":
         return parseKey(data.harpKeys[key][22]);
       case "11":
         return parseKey(data.harpKeys[key][0]);
       case "6":
-        return parseKey(data.harpKeys[key][7]);
+        return parseKey(data.harpKeys[key][20]);
       case "5":
         return parseKey(data.harpKeys[key][9]);
+      case "4":
+        return parseKey(data.harpKeys[key][5]);
+      case "3":
+        return parseKey(data.harpKeys[key][0]);
+      case "2":
+        return parseKey(data.harpKeys[key][22]);
+      case "1":
+      default:
+        return parseKey(data.harpKeys[key][8]);
+    }
+  }
+
+  function harpKeyFromPosition(value, key) {
+    // console.log('harp key', value, key, data.harpKeys[key]);
+    switch (value) {
+      case "12":
+        return parseKey(data.harpKeys[key][10]);
+      case "11":
+        return parseKey(data.harpKeys[key][21]);
+      case "6":
+        return parseKey(data.harpKeys[key][28]);
+      case "5":
+        return parseKey(data.harpKeys[key][32]);
       case "4":
         return parseKey(data.harpKeys[key][23]);
       case "3":
@@ -65,12 +89,12 @@
       songKey.value = "";
     } else {
       harpKeyLabel.innerHTML = data.harpKeys[harpKeyValue][8];
-      songKey.value = keyFromPosition(positionValue, harpKeyValue);
+      songKey.value = songKeyFromPosition(positionValue, harpKeyValue);
     }
   }
 
   function updateSongKey() {
-    harpKey.value = keyFromPosition(songGenre.value, songKey.value);
+    harpKey.value = harpKeyFromPosition(songGenre.value, songKey.value);
   }
 
   document.getElementById("song_genre").addEventListener("change", function () {
