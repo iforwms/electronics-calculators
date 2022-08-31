@@ -17,6 +17,28 @@
     return newKey;
   }
 
+  function keyFromPosition(value, key) {
+    switch (value) {
+      case "12":
+        return parseKey(data.harpKeys[key][22]);
+      case "11":
+        return parseKey(data.harpKeys[key][0]);
+      case "6":
+        return parseKey(data.harpKeys[key][7]);
+      case "5":
+        return parseKey(data.harpKeys[key][9]);
+      case "4":
+        return parseKey(data.harpKeys[key][23]);
+      case "3":
+        return parseKey(data.harpKeys[key][18]);
+      case "2":
+        return parseKey(data.harpKeys[key][10]);
+      case "1":
+      default:
+        return parseKey(data.harpKeys[key][8]);
+    }
+  }
+
   function updateNotes() {
     harpKeyValue = harpKey.value;
     positionValue = position.value;
@@ -27,6 +49,13 @@
           ? data.positions[positionValue][i]
           : data.harpKeys[harpKeyValue][i];
       noteEl.dataset.note = data.positions[positionValue][i];
+
+      noteEl.classList.remove('diatonic', 'non-diatonic');
+      if(data.positions[positionValue][i].includes('&#')) {
+        noteEl.classList.add('non-diatonic');
+      } else {
+        noteEl.classList.add('diatonic');
+      }
     }
 
     songGenre.value = positionValue;
@@ -36,42 +65,12 @@
       songKey.value = "";
     } else {
       harpKeyLabel.innerHTML = data.harpKeys[harpKeyValue][8];
-      switch (positionValue) {
-        case "4":
-          songKey.value = parseKey(data.harpKeys[harpKeyValue][23]);
-          break;
-        case "3":
-          songKey.value = parseKey(data.harpKeys[harpKeyValue][18]);
-          break;
-        case "2":
-          songKey.value = parseKey(data.harpKeys[harpKeyValue][10]);
-          break;
-        case "1":
-        default:
-          songKey.value = parseKey(data.harpKeys[harpKeyValue][8]);
-          break;
-      }
+      songKey.value = keyFromPosition(positionValue, harpKeyValue);
     }
   }
 
   function updateSongKey() {
-    songGenreValue = songGenre.value;
-    songKeyValue = songKey.value;
-    switch (songGenreValue) {
-      case "4": // aeolian
-        harpKey.value = parseKey(data.harpKeys[songKeyValue][5]);
-        break;
-      case "3": // dorian
-        harpKey.value = parseKey(data.harpKeys[songKeyValue][0]);
-        break;
-      case "2": // mixolydian
-        harpKey.value = parseKey(data.harpKeys[songKeyValue][22]);
-        break;
-      case "1": // ionian
-      default:
-        harpKey.value = parseKey(data.harpKeys[songKeyValue][8]);
-        break;
-    }
+    harpKey.value = keyFromPosition(songGenre.value, songKey.value);
   }
 
   document.getElementById("song_genre").addEventListener("change", function () {
@@ -88,6 +87,11 @@
   });
   document.getElementById("harp_key").addEventListener("change", function () {
     updateNotes();
+  });
+
+  var harpContainer = document.getElementById('harp');
+  document.getElementById('diatonic_toggle').addEventListener('click', function() {
+    harpContainer.classList.toggle('diatonic-only');
   });
 
   updateNotes();
