@@ -1,0 +1,12 @@
+#!/bin/bash
+
+base_dir="/Users/ifor/code/iforwms.github.io"
+
+echo "Pushing to remote repo."
+git -C $base_dir add .
+git -C $base_dir commit -m "Quick commit - $(date '+%Y/%m/%d %H:%M')"
+git -C $base_dir push
+
+echo "All done!"
+
+exit 0

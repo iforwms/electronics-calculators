@@ -1,0 +1,10 @@
+{
+  "raw_string": "A -- |: vi [iii7 IV] ii [IV V] vi [iii7 IV] ii [V I] I\nB -- [IV-3 I/iii>] [IV> I/iii V/ii I/iii] [IV-3 V>] [vi> V IV-2] [IV-3 I/iii>] [IV> I/iii V/ii I/iii] [IV-3 V>] [vi V] <IV>_1 [IV/vi IV/v IV/iii IV/ii] :| IV_2 [IV/vi IV/v IV/vi IV/vii IV/i IV/ii IV/iii IV/iv]\nC -- I V> ii [IV V] I V> ii IV> I V> ii [IV V] I V> ii <IV> IV\nD -- vi IV I V/vii bVII vi V III/#V vi IV I V/vii bVII <bVII> vi7 <vi7> II II II II\nA -- |: vi [iii7 IV] ii [IV V] vi [iii7 IV] ii [V I] I\nB -- [IV-3 I/iii>] [IV> I/iii V/ii I/iii] [IV-3 V>] [vi> V IV-2] [IV-3 I/iii>] [IV> I/ii V/ii I/iii] [IV-3 V>] [vi V] <IV> [IV/vi IV/v IV/iii IV/ii] :|\nOutro -- <I>",
+  "title": "The Crown",
+  "composer": "Chas Williams",
+  "key_signature": "D",
+  "time_signature": "4/4",
+  "tempo": 145,
+  "force_single_line": false,
+  "measures_on_new_lines": true
+}

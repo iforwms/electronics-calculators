@@ -1,0 +1,13 @@
+{
+  "title": "Song Title",
+  "composer": "Composer (optional)",
+  "key_signature": "C",
+  "time_signature": "4/4",
+  "tempo": 100,
+  "options": {
+    "force_single_line": false,
+    "measures_on_new_lines": false
+  },
+  "raw_string": "Section Name -- |: I IV vi [ii-1 V] :|",
+  "lyrics": "Optional"
+}
