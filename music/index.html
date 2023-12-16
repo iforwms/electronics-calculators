@@ -77,13 +77,20 @@
 <div class="md:flex">
   <div id="song-index" class="print:hidden z-10 md:fixed md:h-screen mb-0 md:mb-2 my-2 md:w-[320px] md:my-0 ml-2 md:ml-0 mr-2 bg-white rounded md:rounded-none shadow">
   
-  <div class="flex items-center p-2 border-b border-gray-400">
+  <div class="flex flex-col items-start p-2 border-b border-gray-400">
   <h1 class="text-lg font-medium">
     Song Index  (30)
   </h1>
+  <div class="flex items-center mt-1">
+    <input
+      id="song_search_input"
+      placeholder="Enter song title..."
+      class="focus:outline-none px-2 py-1 text-sm h-[32px] bg-white border-l rounded-l border-y" type="text">
+    <button class="focus:outline-none rounded-r h-[32px] border text-lg text-gray-500 hover:text-red-500 px-2" id="song_search_clear">&times;</button>
+  </div>
 </div>
 
-<div class="md:h-[calc(100vh-52px-45px)] px-2 sm:columns-3 columns-2 md:columns-auto pb-2 overflow-y-auto custom-scroll md:block">
+<div class="md:h-[calc(100vh-52px-45px)] pt-2 px-2 sm:columns-3 columns-2 md:columns-auto pb-2 overflow-y-auto custom-scroll md:block">
       <div class="flex items-start">
       
 
@@ -325,6 +332,29 @@
       </a>
     </div>
   </div>
+
+<script>
+(function() {
+  const searchInput = document.getElementById('song_search_input');
+  const searchClear = document.getElementById('song_search_clear');
+  const songLinks = document.querySelectorAll('.song_link');
+
+  searchClear.addEventListener('click', function() {
+    searchInput.value = "";
+    songLinks.forEach(link => link.parentNode.classList.remove('hidden'));
+  });
+
+  searchInput.addEventListener('input', function(e) {
+    songLinks.forEach(function(link) {
+      if(link.innerText.toLowerCase().includes(e.target.value.toLowerCase())) {
+        link.parentNode.classList.remove('hidden');
+      } else {
+        link.parentNode.classList.add('hidden');
+      }
+    });
+  });
+})();
+</script>
 </div>
 
 
