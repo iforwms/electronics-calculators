@@ -687,7 +687,11 @@ data-degree="4" class="chord_note">
             // TODO: Sort minor symbol for roman numerals
             var new_string = chord.dataset.accidental+chord.dataset[song_key];
             chord.innerHTML = new_string;
-            chord.nextElementSibling.innerHTML = chord.dataset[chord_symbol];
+            if(chord.dataset[chord_symbol] !== 'm' && chord.dataset[chord_symbol] !== '–') {
+              chord.nextElementSibling.innerHTML = chord.dataset[chord_symbol];
+            } else {
+              chord.nextElementSibling.innerHTML = '';
+            }
           });
         chord_bass.forEach(
           function(chord) {
