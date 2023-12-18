@@ -2152,11 +2152,11 @@ And the moon is the only light you'll see</pre>
           function(chord) {
             var new_string = chord.dataset.accidental+chord.dataset[song_key];
             chord.innerHTML = new_string;
-            if(chord.dataset[chord_symbol] !== 'm' && chord.dataset[chord_symbol] !== '–') {
-              chord.nextElementSibling.innerHTML = chord.dataset[chord_symbol];
-            } else {
-              chord.nextElementSibling.innerHTML = '';
+            new_symbol = chord.dataset[chord_symbol]
+            if((new_symbol[0] === 'm' && new_symbol[1] !== 'a') || new_symbol[0] === '–') {
+              new_symbol = new_symbol.substring(1);
             }
+            chord.nextElementSibling.innerHTML = new_symbol;
           });
         chord_bass.forEach(
           function(chord) {
