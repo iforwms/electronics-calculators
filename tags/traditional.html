@@ -684,7 +684,6 @@ data-degree="4" class="chord_note">
         use_jazz_symbols_container.classList.remove('hidden');
         chord_notes.forEach(
           function(chord) {
-            // TODO: Sort minor symbol for roman numerals
             var new_string = chord.dataset.accidental+chord.dataset[song_key];
             chord.innerHTML = new_string;
             if(chord.dataset[chord_symbol] !== 'm' && chord.dataset[chord_symbol] !== '–') {
