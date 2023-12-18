@@ -1,0 +1,942 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="/output.css" rel="stylesheet">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="manifest" href="/assets/site.webmanifest">
+    <link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#ff0000">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>Nashville Chart Generator</title>
+  </head>
+
+  <body class="text-gray-700 bg-gray-100">
+    <header class="fixed top-0 left-0 right-0 z-10 flex items-center justify-between p-2 text-white bg-primary print:hidden">
+  <h1 id="page_title" class="text-lg font-medium text-center cursor-help">
+    <span class="hidden text-white hover:text-white hover:border-white md:block">Nashville Chart Generator</span>
+    <span class="text-white hover:text-white hover:border-white md:hidden">NCG</span>
+  </h1>
+
+  <div class="flex items-center">
+    
+    <a class="p-2 text-sm text-white underline hover:text-white md:hidden" href="#song-index">Index</a>
+
+    <label id="use_jazz_symbols_container" class="hidden mr-4 text-xs cursor-pointer sm:text-sm whitespace-nowrap">
+      <span class="text-white underline border-primary whitespace-nowrap">Use jazz symbols?</span>
+      <input class="ml-1" type="checkbox" id="use_jazz_symbols_checkbox">
+    </label>
+
+    <select class="border-primary text-primary sm:max-w-none max-w-[140px] p-2 text-sm bg-white border rounded" id="key_select">
+                        <optgroup label="Generic">
+                          <option value="outline">Song Outline</option>
+                          <option value="arabic">Nashville (1, 2, 3)</option>
+                          <option value="roman">Roman (I, II, III)</option>
+                          <option value="solfege">Solfège (do, re, mi)</option>
+                      </optgroup>
+                                <optgroup label="Natural">
+                          <option value="c">C</option>
+                          <option value="d">D</option>
+                          <option value="e">E</option>
+                          <option value="f">F</option>
+                          <option value="g">G</option>
+                          <option value="a">A</option>
+                          <option value="b">B</option>
+                      </optgroup>
+                                <optgroup label="Sharp">
+                          <option value="cs">C&sharp;</option>
+                          <option value="ds">D&sharp;</option>
+                          <option value="fs">F&sharp;</option>
+                          <option value="gs">G&sharp;</option>
+                          <option value="as">A&sharp;</option>
+                      </optgroup>
+                                <optgroup label="Flat">
+                          <option value="db">D&flat;</option>
+                          <option value="eb">E&flat;</option>
+                          <option value="gb">G&flat;</option>
+                          <option value="ab">A&flat;</option>
+                          <option value="bb">B&flat;</option>
+                      </optgroup>
+                  </select>
+  </div>
+</header>
+
+<div class="print:hidden h-[52px]"></div>
+
+
+    <div class="mx-auto">
+
+
+<div class="md:flex">
+  <div id="song-index" class="print:hidden z-10 md:fixed md:h-screen mb-0 md:mb-2 my-2 md:w-[320px] md:my-0 ml-2 md:ml-0 mr-2 bg-white rounded md:rounded-none shadow">
+  <div class="p-2 border-b border-gray-400">
+  <h2 class="text-sm font-medium">Tags</h2>
+
+  <div class="flex flex-wrap items-center -ml-2">
+          <a href="/tags/doo-wop.html" class="px-2 py-1 text-xs uppercase">doo-wop</a>
+          <a href="/tags/loop.html" class="px-2 py-1 text-xs uppercase">loop</a>
+          <a href="/tags/traditional.html" class="px-2 py-1 text-xs uppercase">traditional</a>
+      </div>
+</div>
+
+  <div class="flex flex-col items-start p-2">
+  <h1 class="text-sm font-medium">
+    Song Index (traditional) (1)
+  </h1>
+  <div class="flex items-center mt-1">
+    <input
+      id="song_search_input"
+      placeholder="Enter song title..."
+      value=""
+      class="focus:outline-none px-2 py-1 text-sm h-[32px] bg-white border-l rounded-l border-y" type="text">
+    <button class="focus:outline-none rounded-r h-[32px] border text-lg text-gray-500 hover:text-red-500 px-2" id="song_search_clear">&times;</button>
+  </div>
+</div>
+
+<div class="md:h-[calc(100vh-61px-52px-72px)] pt-2 px-2 sm:columns-3 columns-2 md:columns-auto pb-2 overflow-y-auto custom-scroll md:block">
+      <div class="flex items-start">
+      
+
+      <a class="block p-1 text-sm song_link break-inside-avoid-column" href="#song-12-bar-blues">
+        12 Bar Blues        <span class="hidden md:inline">
+                  </span>
+      </a>
+    </div>
+  </div>
+
+<script>
+(function() {
+  const searchInput = document.getElementById('song_search_input');
+  const searchClear = document.getElementById('song_search_clear');
+  const songLinks = document.querySelectorAll('.song_link');
+
+  searchClear.addEventListener('click', function() {
+    searchInput.value = "";
+    songLinks.forEach(link => link.parentNode.classList.remove('hidden'));
+  });
+
+  searchInput.addEventListener('input', function(e) {
+    songLinks.forEach(function(link) {
+      var allText = link.innerText.toLowerCase();
+      allText += link.children[0].innerText;
+      if(allText.toLowerCase().includes(e.target.value.toLowerCase())) {
+        link.parentNode.classList.remove('hidden');
+      } else {
+        link.parentNode.classList.add('hidden');
+      }
+    });
+  });
+})();
+</script>
+</div>
+
+
+  <div class="md:w-[calc(100%-320px)] px-2 mx-auto flex-1 md:ml-[320px] md:print:ml-0 md:print:w-full gap-x-2 columns-1">
+          <div class="flex items-center justify-between px-3 py-2 mt-2 font-bold text-white bg-pink-500 rounded">
+        <span>1 song(s) tagged traditional.</span>
+        <a class="text-white hover:text-pink-900" href="/">Show all</a>
+      </div>
+    
+          <div id="song-12-bar-blues" class="my-2 overflow-hidden bg-white rounded shadow song-container">
+  <div class="flex flex-col-reverse p-2 text-white bg-gray-700 sm:items-center sm:flex-row">
+  <div class="flex items-center">
+    
+
+          <div data-key="c" class="cursor-pointer hover:text-pink-500 hover:border-pink-500 key_signature flex items-center justify-center inline-block w-8 h-8 font-serif text-[16px] font-normal border border-white rounded-full">C</div>
+    
+    
+    
+    
+      </div>
+
+  <h2 class="mb-2 text-lg font-medium sm:mb-0 sm:ml-4 sm:ml-6 sm:text-xl">
+    12 Bar Blues      </h2>
+</div>
+
+  <div class="hidden song-chords rid grid-rows-4 grid-flow-col">
+              <div class=" border-b flex items-start pt-3 flex-col sm:flex-row px-2">
+  
+  <div class="flex flex-wrap items-center justify-start mt-2 sm:ml-2 sm:mt-0">
+                  <div class="repeat-marker mx-2 leading-[24px] w-[20px] h-[38px] text-[38px]">
+  &#119046;</div>
+
+
+                          <div class="relative song-measure flex border-b-2 px-2 mx-2 text-lg mb-2
+      border-transparent"
+>
+  
+      
+<div class="relative px-1 mt-1 pt-1 pb-[12px] flex flex-col justify-end font-serif min-w-[32px] text-center text-xl font-normal">
+  
+
+
+
+
+
+      <span class="flex justify-center basic_chord">
+      <span data-roman="I"
+data-accidental=""
+data-arabic="1"
+data-solfege="do"
+data-chord-symbol="7"
+data-chord-symbol-jazz="7"
+data-degree="0" class="chord_note">
+        I      </span>
+      <sub class="chord_symbol top-[18px] text-[14px] left-[1px]">
+        7      </sub>
+    </span>
+  </div>
+
+  </div>
+
+
+
+                          <div class="relative song-measure flex border-b-2 px-2 mx-2 text-lg mb-2
+      border-transparent"
+>
+  
+      
+<div class="relative px-1 mt-1 pt-1 pb-[12px] flex flex-col justify-end font-serif min-w-[32px] text-center text-xl font-normal">
+  
+
+
+
+
+
+      <span class="flex justify-center basic_chord">
+      <span data-roman="IV"
+data-accidental=""
+data-arabic="4"
+data-solfege="fa"
+data-chord-symbol="7"
+data-chord-symbol-jazz="7"
+data-degree="3" class="chord_note">
+        IV      </span>
+      <sub class="chord_symbol top-[18px] text-[14px] left-[1px]">
+        7      </sub>
+    </span>
+  </div>
+
+  </div>
+
+
+
+                          <div class="relative song-measure flex border-b-2 px-2 mx-2 text-lg mb-2
+      border-transparent"
+>
+  
+      
+<div class="relative px-1 mt-1 pt-1 pb-[12px] flex flex-col justify-end font-serif min-w-[32px] text-center text-xl font-normal">
+  
+
+
+
+
+
+      <span class="flex justify-center basic_chord">
+      <span data-roman="I"
+data-accidental=""
+data-arabic="1"
+data-solfege="do"
+data-chord-symbol="7"
+data-chord-symbol-jazz="7"
+data-degree="0" class="chord_note">
+        I      </span>
+      <sub class="chord_symbol top-[18px] text-[14px] left-[1px]">
+        7      </sub>
+    </span>
+  </div>
+
+  </div>
+
+
+
+                          <div class="relative song-measure flex border-b-2 px-2 mx-2 text-lg mb-2
+      border-transparent"
+>
+  
+      
+<div class="relative px-1 mt-1 pt-1 pb-[12px] flex flex-col justify-end font-serif min-w-[32px] text-center text-xl font-normal">
+  
+
+
+
+
+
+      <span class="flex justify-center basic_chord">
+      <span data-roman="I"
+data-accidental=""
+data-arabic="1"
+data-solfege="do"
+data-chord-symbol="7"
+data-chord-symbol-jazz="7"
+data-degree="0" class="chord_note">
+        I      </span>
+      <sub class="chord_symbol top-[18px] text-[14px] left-[1px]">
+        7      </sub>
+    </span>
+  </div>
+
+  </div>
+
+  <div class="measure-break h-0 repeat-measure-break basis-full">&nbsp;</div>
+
+
+                          <div class="relative song-measure flex border-b-2 px-2 mx-2 text-lg mb-2
+      border-transparent"
+>
+  
+      
+<div class="relative px-1 mt-1 pt-1 pb-[12px] flex flex-col justify-end font-serif min-w-[32px] text-center text-xl font-normal">
+  
+
+
+
+
+
+      <span class="flex justify-center basic_chord">
+      <span data-roman="IV"
+data-accidental=""
+data-arabic="4"
+data-solfege="fa"
+data-chord-symbol="7"
+data-chord-symbol-jazz="7"
+data-degree="3" class="chord_note">
+        IV      </span>
+      <sub class="chord_symbol top-[18px] text-[14px] left-[1px]">
+        7      </sub>
+    </span>
+  </div>
+
+  </div>
+
+
+
+                          <div class="relative song-measure flex border-b-2 px-2 mx-2 text-lg mb-2
+      border-transparent"
+>
+  
+      
+<div class="relative px-1 mt-1 pt-1 pb-[12px] flex flex-col justify-end font-serif min-w-[32px] text-center text-xl font-normal">
+  
+
+
+
+
+
+      <span class="flex justify-center basic_chord">
+      <span data-roman="IV"
+data-accidental=""
+data-arabic="4"
+data-solfege="fa"
+data-chord-symbol="7"
+data-chord-symbol-jazz="7"
+data-degree="3" class="chord_note">
+        IV      </span>
+      <sub class="chord_symbol top-[18px] text-[14px] left-[1px]">
+        7      </sub>
+    </span>
+  </div>
+
+  </div>
+
+
+
+                          <div class="relative song-measure flex border-b-2 px-2 mx-2 text-lg mb-2
+      border-transparent"
+>
+  
+      
+<div class="relative px-1 mt-1 pt-1 pb-[12px] flex flex-col justify-end font-serif min-w-[32px] text-center text-xl font-normal">
+  
+
+
+
+
+
+      <span class="flex justify-center basic_chord">
+      <span data-roman="I"
+data-accidental=""
+data-arabic="1"
+data-solfege="do"
+data-chord-symbol="7"
+data-chord-symbol-jazz="7"
+data-degree="0" class="chord_note">
+        I      </span>
+      <sub class="chord_symbol top-[18px] text-[14px] left-[1px]">
+        7      </sub>
+    </span>
+  </div>
+
+  </div>
+
+
+
+                          <div class="relative song-measure flex border-b-2 px-2 mx-2 text-lg mb-2
+      border-transparent"
+>
+  
+      
+<div class="relative px-1 mt-1 pt-1 pb-[12px] flex flex-col justify-end font-serif min-w-[32px] text-center text-xl font-normal">
+  
+
+
+
+
+
+      <span class="flex justify-center basic_chord">
+      <span data-roman="I"
+data-accidental=""
+data-arabic="1"
+data-solfege="do"
+data-chord-symbol="7"
+data-chord-symbol-jazz="7"
+data-degree="0" class="chord_note">
+        I      </span>
+      <sub class="chord_symbol top-[18px] text-[14px] left-[1px]">
+        7      </sub>
+    </span>
+  </div>
+
+  </div>
+
+  <div class="measure-break h-0 repeat-measure-break basis-full">&nbsp;</div>
+
+
+                          <div class="relative song-measure flex border-b-2 px-2 mx-2 text-lg mb-2
+      border-transparent"
+>
+  
+      
+<div class="relative px-1 mt-1 pt-1 pb-[12px] flex flex-col justify-end font-serif min-w-[32px] text-center text-xl font-normal">
+  
+
+
+
+
+
+      <span class="flex justify-center basic_chord">
+      <span data-roman="V"
+data-accidental=""
+data-arabic="5"
+data-solfege="sol"
+data-chord-symbol="7"
+data-chord-symbol-jazz="7"
+data-degree="4" class="chord_note">
+        V      </span>
+      <sub class="chord_symbol top-[18px] text-[14px] left-[1px]">
+        7      </sub>
+    </span>
+  </div>
+
+  </div>
+
+
+
+                          <div class="relative song-measure flex border-b-2 px-2 mx-2 text-lg mb-2
+      border-transparent"
+>
+  
+      
+<div class="relative px-1 mt-1 pt-1 pb-[12px] flex flex-col justify-end font-serif min-w-[32px] text-center text-xl font-normal">
+  
+
+
+
+
+
+      <span class="flex justify-center basic_chord">
+      <span data-roman="IV"
+data-accidental=""
+data-arabic="4"
+data-solfege="fa"
+data-chord-symbol="7"
+data-chord-symbol-jazz="7"
+data-degree="3" class="chord_note">
+        IV      </span>
+      <sub class="chord_symbol top-[18px] text-[14px] left-[1px]">
+        7      </sub>
+    </span>
+  </div>
+
+  </div>
+
+
+
+                          <div class="relative song-measure flex border-b-2 px-2 mx-2 text-lg mb-2
+      border-transparent"
+>
+  
+      
+<div class="relative px-1 mt-1 pt-1 pb-[12px] flex flex-col justify-end font-serif min-w-[32px] text-center text-xl font-normal">
+  
+
+
+
+
+
+      <span class="flex justify-center basic_chord">
+      <span data-roman="I"
+data-accidental=""
+data-arabic="1"
+data-solfege="do"
+data-chord-symbol="7"
+data-chord-symbol-jazz="7"
+data-degree="0" class="chord_note">
+        I      </span>
+      <sub class="chord_symbol top-[18px] text-[14px] left-[1px]">
+        7      </sub>
+    </span>
+  </div>
+
+  </div>
+
+
+
+                          <div class="relative song-measure flex border-b-2 px-2 mx-2 text-lg mb-2
+      border-transparent"
+>
+  
+      
+<div class="relative px-1 mt-1 pt-1 pb-[12px] flex flex-col justify-end font-serif min-w-[32px] text-center text-xl font-normal">
+  
+
+
+
+
+
+      <span class="flex justify-center basic_chord">
+      <span data-roman="V"
+data-accidental=""
+data-arabic="5"
+data-solfege="sol"
+data-chord-symbol="7"
+data-chord-symbol-jazz="7"
+data-degree="4" class="chord_note">
+        V      </span>
+      <sub class="chord_symbol top-[18px] text-[14px] left-[1px]">
+        7      </sub>
+    </span>
+  </div>
+
+  </div>
+
+
+
+                          <div class="repeat-marker mx-2 leading-[24px] w-[20px] h-[38px] text-[38px]">
+  &#119047;</div>
+
+  <div class="measure-break h-0 repeat-measure-break basis-full">&nbsp;</div>
+
+              </div>
+</div>
+
+      </div>
+
+  <div class="hidden px-2 lex song-outline">
+              
+      <div class="flex-1 pt-3">
+  
+  <div class="relative mt-6 border-r border-gray-700">
+          <div class="absolute top-[1px] flex h-[27px] flex-col left-[10px] font-serif font-bold text-center">
+        <span class="h-[14px] leading-[12px] bg-white"></span>
+        <span class="h-[14px] leading-[12px] bg-white"></span>
+      </div>
+    
+    <div class="absolute -top-[22px] left-0 right-0 font-serif font-bold text-center">24</div>
+
+    <div class="absolute top-[12px] left-[32px] right-[10px] h-[5px] bg-gray-700">&nbsp;</div>
+
+    <div class="absolute top-[8px] left-[32px] w-[1px] h-[14px] bg-gray-700">&nbsp;</div>
+    <div class="absolute top-[8px] right-[10px] w-[1px] h-[14px] bg-gray-700">&nbsp;</div>
+
+    <div class="border-b h-0 mb-[6px] border-gray-700"></div>
+    <div class="border-b h-0 mb-[6px] border-gray-700"></div>
+    <div class="border-b h-0 mb-[6px] border-gray-700"></div>
+    <div class="border-b h-0 mb-[6px] border-gray-700"></div>
+    <div class="border-b h-0 mb-[6px] border-gray-700"></div>
+  </div>
+</div>
+            </div>
+
+  
+  <div class="p-2 print:hidden">
+    <h3 class="text-sm anchor show_input_toggle">Show Input</h3>
+    <div class="p-2 mt-1 text-sm border rounded song_raw_string">
+      <pre class="pb-2 overflow-x-auto custom-scroll">|: I7 IV7 I7 I7 IV7 IV7 I7 I7 V7 IV7 I7 V7 :|</pre>
+    </div>
+  </div>
+</div>
+    
+      </div>
+</div>
+
+<script>
+(function() {
+  const song_containers = document.querySelectorAll('.song-container');
+  const song_outlines = document.querySelectorAll('.song-outline');
+  const song_chords = document.querySelectorAll('.song-chords');
+  const show_input_toggles = document.querySelectorAll('.show_input_toggle');
+  const use_jazz_symbols_checkbox = document.getElementById('use_jazz_symbols_checkbox');
+  const use_jazz_symbols_container = document.getElementById('use_jazz_symbols_container');
+  const key_select = document.getElementById('key_select');
+  const chord_notes = document.querySelectorAll('.chord_note');
+  const chord_bass = document.querySelectorAll('.chord_bass');
+  const song_links = document.querySelectorAll('.song_link');
+  const key_signatures = document.querySelectorAll('.key_signature');
+  const major_scales = {"c":["C","D","E","F","G","A","B","C"],"cs":["C#","D#","E#","F#","G#","A#","B#","C#"],"db":["Db","Eb","F","Gb","Ab","Bb","C","Db"],"d":["D","E","F#","G","A","B","C#","D"],"ds":["D#","E#","FX","G#","A#","B#","CX","D#"],"eb":["Eb","F","G","Ab","Bb","C","D","Eb"],"e":["E","F#","G#","A","B","C#","D#","E"],"es":["E#","FX","GX","A#","B#","CX","DX","E#"],"f":["F","G","A","Bb","C","D","E","F"],"fs":["F#","G#","A#","B","C#","D#","E#","F#"],"gb":["Gb","Ab","Bb","Cb","Db","Eb","F","Gb"],"g":["G","A","B","C","D","E","F#","G"],"gs":["G#","A#","B#","C#","D#","E#","FX","G#"],"ab":["Ab","Bb","C","Db","Eb","F","G","Ab"],"a":["A","B","C#","D","E","F#","G#","A"],"as":["A#","B#","CX","D#","E#","FX","GX","A#"],"bb":["Bb","C","D","Eb","F","G","A","Bb"],"b":["B","C#","D#","E","F#","G#","A#","B"],"bs":["B#","CX","DX","E#","FX","GX","AX","B#"],"cb":["Cb","Db","Eb","Fb","Gb","Ab","Bb","Cb"]};
+  const chromatic_scales = {"c":["C","D","E","F","G","A","B","C"],"cs":["C#","D#","E#","F#","G#","A#","B#","C#"],"db":["Db","Eb","F","Gb","Ab","Bb","C","Db"],"d":["D","E","F#","G","A","B","C#","D"],"ds":["D#","E#","FX","G#","A#","B#","CX","D#"],"eb":["Eb","F","G","Ab","Bb","C","D","Eb"],"e":["E","F#","G#","A","B","C#","D#","E"],"es":["E#","FX","GX","A#","B#","CX","DX","E#"],"f":["F","G","A","Bb","C","D","E","F"],"fs":["F#","G#","A#","B","C#","D#","E#","F#"],"gb":["Gb","Ab","Bb","Cb","Db","Eb","F","Gb"],"g":["G","A","B","C","D","E","F#","G"],"gs":["G#","A#","B#","C#","D#","E#","FX","G#"],"ab":["Ab","Bb","C","Db","Eb","F","G","Ab"],"a":["A","B","C#","D","E","F#","G#","A"],"as":["A#","B#","CX","D#","E#","FX","GX","A#"],"bb":["Bb","C","D","Eb","F","G","A","Bb"],"b":["B","C#","D#","E","F#","G#","A#","B"],"bs":["B#","CX","DX","E#","FX","GX","AX","B#"],"cb":["Cb","Db","Eb","Fb","Gb","Ab","Bb","Cb"]};
+
+  const delete_btns = document.querySelectorAll('.delete_btn');
+  delete_btns.forEach(btn => btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    const confirm = window.confirm("Are you sure you want to delete this song?");
+    if(!confirm) return;
+
+    window.location.href = e.target.href;
+  }));
+
+  let url_obj = new URL(window.location.href);
+  let params = url_obj.searchParams;
+  let song_key = params.has('key') ? params.get('key') : 'roman';
+  let use_jazz_symbols = params.has('use_jazz_symbols');
+
+  document.addEventListener('scroll', e => {
+    song_containers.forEach(ha => {
+      const rect = ha.getBoundingClientRect();
+      if(rect.top > 0 && rect.top < 150) {
+        const location = window.location.toString().split('#')[0];
+        history.replaceState(null, null, location + '#' + ha.id);
+        song_links.forEach(function(link) {
+          if(link.hash !== `#${ha.id}`) {
+            link.classList.remove('active');
+          } else {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  });
+
+  show_input_toggles.forEach(btn => btn.addEventListener('click', function(e) {
+    this.classList.toggle('show_input');
+  }));
+
+  if(use_jazz_symbols_checkbox) {
+    use_jazz_symbols_checkbox.addEventListener('click', function(e) {
+      var url = `${window.location.pathname}?key=${song_key}`;
+      if(e.target.checked) {
+        url += '&use_jazz_symbols';
+      }
+      url += window.location.hash;
+      window.history.pushState({},"", url);
+      set_key();
+    });
+  }
+
+  key_signatures.forEach(link => link.addEventListener('click', function(e) {
+    var url = `${window.location.pathname}?key=${e.target.dataset.key}`;
+    if(use_jazz_symbols) {
+      url += "&use_jazz_symbols";
+    }
+    url += window.location.hash;
+    window.history.pushState({},"", url);
+    set_key();
+  }));
+
+  key_select.addEventListener('change', function(e) {
+    var url = `${window.location.pathname}?key=${e.target.value}`;
+    if(use_jazz_symbols) {
+      url += "&use_jazz_symbols";
+    }
+    url += window.location.hash;
+    window.history.pushState({},"", url);
+    set_key();
+  });
+
+  function set_key() {
+    params = new URL(window.location.href).searchParams;
+    song_key = params.has('key') ? params.get('key') : 'roman';
+    use_jazz_symbols = params.has('use_jazz_symbols');
+    chord_symbol = use_jazz_symbols ? 'chordSymbolJazz' : 'chordSymbol';
+
+    key_select.value = song_key;
+    use_jazz_symbols_checkbox.checked = use_jazz_symbols;
+
+    song_outlines.forEach(song => song.classList.add('hidden'));
+    song_chords.forEach(song => song.classList.remove('hidden'));
+    use_jazz_symbols_container.classList.add('hidden');
+
+    /* console.log(`key: ${song_key}; use_jazz_symbols: ${use_jazz_symbols}`); */
+
+    switch(song_key) {
+      case 'outline':
+        song_outlines.forEach(song => song.classList.remove('hidden'));
+        song_chords.forEach(song => song.classList.add('hidden'));
+        break;
+      case 'roman':
+        use_jazz_symbols_container.classList.remove('hidden');
+        chord_notes.forEach(
+          function(chord) {
+            // TODO: Sort minor symbol for roman numerals
+            var new_string = chord.dataset.accidental+chord.dataset[song_key];
+            chord.innerHTML = new_string;
+            chord.nextElementSibling.innerHTML = chord.dataset[chord_symbol];
+          });
+        chord_bass.forEach(
+          function(chord) {
+            var new_string = chord.dataset.accidental+chord.dataset['arabic'];
+            chord.innerHTML = new_string;
+        });
+        break;
+      case 'arabic':
+      case 'solfege':
+        use_jazz_symbols_container.classList.remove('hidden');
+        chord_notes.forEach(
+          function(chord) {
+            var new_string = chord.dataset.accidental+chord.dataset[song_key];
+            chord.innerHTML = new_string;
+            chord.nextElementSibling.innerHTML = chord.dataset[chord_symbol];
+          });
+        chord_bass.forEach(
+          function(chord) {
+            var new_string = chord.dataset.accidental+chord.dataset[song_key];
+            chord.innerHTML = new_string;
+        });
+        break
+      default:
+        use_jazz_symbols_container.classList.remove('hidden');
+        chord_notes.forEach(
+          function(chord) {
+            var new_string = major_scales[song_key][chord.dataset.degree]+chord.dataset.accidental;
+            chord.innerHTML = new_string;
+            chord.nextElementSibling.innerHTML = chord.dataset[chord_symbol];
+        });
+        chord_bass.forEach(
+          function(chord) {
+            var new_string = major_scales[song_key][chord.dataset.degree]+chord.dataset.accidental;
+            chord.innerHTML = new_string;
+        });
+    }
+  }
+
+  set_key();
+
+  if(url_obj.hash) {
+    const active_song = document.getElementById(url_obj.hash.replace("#", ""));
+    active_song.scrollIntoView();
+  }
+})();
+</script>
+
+<div class="fixed inset-0 z-10 flex justify-center hidden md:items-center" id="modal_container" style="background-color: rgba(0, 0, 0, 0.8);">
+  <div class="max-h-[95vh] mt-2 overflow-y-auto">
+    
+<div class="pb-2 mx-2 bg-white rounded shadow">
+  <div class="">
+    <div class="p-2 pb-2 text-base border-b border-gray-400">
+      <ul class="ml-4 font-serif text-sm list-disc list-outside">
+        <li>Unless a chord is enclosed in a box or underlined with one or more chords, each chord represents one measure/bar of music.</li>
+        <li>Click on the song's original key icon to set the current key.</li>
+      </ul>
+    </div>
+
+    <h2 class="flex items-center justify-between p-2 font-bold border-b border-gray-400 md:text-lg">
+      <span>Usage</span>
+      <span id="close_modal_btn" class="flex items-center justify-center w-6 h-6 -mt-[2px] text-2xl text-red-500 hover:text-red-700 cursor-pointer">&times;</span>
+    </h2>
+  </div>
+
+  <table class="w-full font-serif text-sm md:text-base">
+    <thead>
+      <tr class="border-b">
+        <th class="px-2 py-1 text-left">Input</th>
+        <th class="px-2 py-1 text-left">Output</th>
+        <th class="px-2 py-1 text-left">Description</th>
+      </tr>
+    </thead>
+    <tbody class="[&>tr:nth-child(odd)]:bg-gray-50">
+              <tr class="border-b">
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <pre class="text-xs">I</pre>
+          </td>
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <span class="font-bold">I</span>          </td>
+          <td class="px-2 py-1 align-top">Major one chord</td>
+        </tr>
+              <tr class="border-b">
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <pre class="text-xs">i</pre>
+          </td>
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <span class="font-bold">i</span>          </td>
+          <td class="px-2 py-1 align-top">Minor one chord</td>
+        </tr>
+              <tr class="border-b">
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <pre class="text-xs">V7</pre>
+          </td>
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <span class="font-bold">V<sub>7</sub></span>          </td>
+          <td class="px-2 py-1 align-top">Dominant seventh five chord</td>
+        </tr>
+              <tr class="border-b">
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <pre class="text-xs">iidim</pre>
+          </td>
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <span class="font-bold">ii<sub>&deg;</sub></span>          </td>
+          <td class="px-2 py-1 align-top">Diminished two chord</td>
+        </tr>
+              <tr class="border-b">
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <pre class="text-xs">I/3</pre>
+          </td>
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <div class="flex flex-col items-start justify-center text-xs font-bold"><span class="flex font-normal pb-[1px] mb-[1px] border-b border-gray-700"><span class="text-[16px] text-center min-w-[14px]">I</span><sup class="top-[4px] left-[1px]"></sup></span><span class="flex justify-center"><span class="font-normal text-[16px] ml-[2px] mt-[0px]">3</span></span></div>          </td>
+          <td class="px-2 py-1 align-top">Major one chord with a three in the bass</td>
+        </tr>
+              <tr class="border-b">
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <pre class="text-xs">bvi</pre>
+          </td>
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <span class="font-bold">&flat;vi</span>          </td>
+          <td class="px-2 py-1 align-top">Flat minor six chord</td>
+        </tr>
+              <tr class="border-b">
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <pre class="text-xs">#vi</pre>
+          </td>
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <span class="font-bold">&sharp;vi</span>          </td>
+          <td class="px-2 py-1 align-top">sharp major six chord</td>
+        </tr>
+              <tr class="border-b">
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <pre class="text-xs">X</pre>
+          </td>
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <span class="font-bold">N.C.</span>          </td>
+          <td class="px-2 py-1 align-top">No chord</td>
+        </tr>
+              <tr class="border-b">
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <pre class="text-xs">[I vi]</pre>
+          </td>
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <div class="flex items-center justify-around p-0 border-b-2 border-gray-500"><span class="font-bold">I</span><span class="font-bold">vi</span></div>          </td>
+          <td class="px-2 py-1 align-top">Underlined chords are in the same measure</td>
+        </tr>
+              <tr class="border-b">
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <pre class="text-xs">[ii-3 I-1]</pre>
+          </td>
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <div class="relative flex items-center pb-[10px] justify-around p-0 border-b-2 border-gray-500"><span class="font-bold">I</span><span class="font-bold">vi</span><span class="left-[6px] text-[10px] -bottom-[4px] absolute">III</span><span class="right-[14px] text-[10px] -bottom-[4px] absolute">I</span></div>          </td>
+          <td class="px-2 py-1 align-top">Minor two chord for three beats followed by one beat of the tonic chord</td>
+        </tr>
+              <tr class="border-b">
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <pre class="text-xs">[ii-3 I<-1]</pre>
+          </td>
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <div class="relative flex items-center pb-[10px] justify-around pt-1 px-0 border-b-2 border-gray-500"><span class="font-bold">I</span><span class="font-bold">vi</span><span class="left-[6px] text-[10px] -bottom-[4px] absolute">III</span><span class="right-[14px] text-[10px] -bottom-[4px] absolute">I</span><span class="absolute right-[12px] -top-[10px]">&lt;</span></div>          </td>
+          <td class="px-2 py-1 align-top">Play chord an 1/8th note late. Minor two chord for three and a half beats followed by half a beat of the tonic chord</td>
+        </tr>
+              <tr class="border-b">
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <pre class="text-xs">[ii-3 I>-1]</pre>
+          </td>
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <div class="relative flex items-center pb-[10px] justify-around pt-1 px-0 border-b-2 border-gray-500"><span class="font-bold">I</span><span class="font-bold">vi</span><span class="left-[6px] text-[10px] -bottom-[4px] absolute">III</span><span class="right-[14px] text-[10px] -bottom-[4px] absolute">I</span><span class="absolute right-[12px] -top-[10px]">&gt;</span></div>          </td>
+          <td class="px-2 py-1 align-top">Play chord an 1/8th note early. Minor two chord for two and a half beats followed by one beat and a half of the tonic chord</td>
+        </tr>
+              <tr class="border-b">
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <pre class="text-xs">[[ii]]-2</pre>
+          </td>
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <div class="w-[30px] mt-1 relative flex items-center justify-around p-0 border-2 border-gray-500"><span class="font-bold">ii</span><span class="absolute font-bold bg-white text-[10px] -top-[7px] leading-[10px] px-[2px]">II</span></div>          </td>
+          <td class="px-2 py-1 align-top">A measure lasting only two beats.</td>
+        </tr>
+              <tr class="border-b">
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <pre class="text-xs">&lt;iii&gt;</pre>
+          </td>
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <strong>&lt;iii&gt;</strong>          </td>
+          <td class="px-2 py-1 align-top">Hit the chord and let it ring</td>
+        </tr>
+              <tr class="border-b">
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <pre class="text-xs">I^</pre>
+          </td>
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <div class="w-[30px] relative flex items-center justify-around pt-1"><span class="font-bold">ii</span><span class="absolute top-0 font-bold text-[14px] leading-[10px] px-[2px]">&Hat;</span></div>          </td>
+          <td class="px-2 py-1 align-top">Hit the chord and quickly mute it</td>
+        </tr>
+              <tr class="border-b">
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <pre class="text-xs">|: I IV :|</pre>
+          </td>
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <span class='flex items-center'><span class='text-[24px]'>&#119046;</span><strong class='inline-block mx-1'>I IV</strong><span class='text-[24px]'>&#119047;</span></span>          </td>
+          <td class="px-2 py-1 align-top">Repeat everything between repeat markers.</td>
+        </tr>
+              <tr class="border-b">
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <pre class="text-xs">(up-&flat;3)</pre>
+          </td>
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <span class="flex items-center justify-center block w-8 h-6 text-[14px] font-bold border border-gray-500 rounded-lg"><img class="w-3 h-3" src="/assets/up.svg">&flat;3</span>          </td>
+          <td class="px-2 py-1 align-top">Modulate up by a flat third.</td>
+        </tr>
+              <tr class="border-b">
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <pre class="text-xs">I_2</pre>
+          </td>
+          <td class="px-2 py-1 text-left align-top whitespace-nowrap">
+            <span class="relative px-3 mt-1"><span class="border-gray-700 h-[11px] w-[11px] leading-[8px] text-center text-[8px] absolute top-0 left-0 border rounded-full">2</span><span class="font-bold text-[14px]">I</span></span>          </td>
+          <td class="px-2 py-1 align-top">Add repeat marker.</td>
+        </tr>
+          </tbody>
+  </table>
+</div>
+
+  /?div>
+</div>
+
+<script>
+(function() {
+  const modal_container = document.getElementById('modal_container');
+  const close_modal_btn = document.getElementById('close_modal_btn');
+
+  if(close_modal_btn) {
+    close_modal_btn.addEventListener('click', function() {
+      modal_container.classList.add('hidden');
+    });
+  }
+
+  modal_container.addEventListener('click', function(e) {
+    if(e.target.id !== 'modal_container') return;
+    modal_container.classList.add('hidden');
+  });
+  const header = document.getElementById('page_title');
+  header.addEventListener('click', function() {
+    modal_container.classList.remove('hidden');
+  });
+})();
+</script>
+
+<footer class="bottom-0 z-20 hidden pb-2 text-xs text-center text-gray-400">
+  <a class="underline" href="https://iforwms.com">Ifor Waldo Williams</a> &copy; 2023</footer>
+</div>
+</body>
+</html>
