@@ -2184,7 +2184,7 @@ And the moon is the only light you'll see</pre>
         chord_notes.forEach(
           function(chord) {
             var new_string = major_scales[song_key][chord.dataset.degree]+chord.dataset.accidental;
-            chord.innerHTML = new_string;
+            chord.innerHTML = new_string.replace('#♭', '').replace('X♭', '#');
             chord.nextElementSibling.innerHTML = chord.dataset[chord_symbol];
         });
         chord_bass.forEach(
