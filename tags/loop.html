@@ -67,14 +67,14 @@
   </div>
 </header>
 
-<div class="print:hidden h-[60px]"></div>
+<div class="print:hidden h-[60px] md:h-[52px]"></div>
 
 
     <div class="mx-auto">
 
 
 <div class="md:flex">
-  <div id="song-index" class="print:hidden z-10 md:fixed md:h-screen mb-0 md:mb-2 md:my-2 md:w-[320px] md:my-0 md:mx-2 md:ml-0 bg-white md:rounded-none shadow">
+  <div id="song-index" class="print:hidden z-10 md:fixed md:h-[calc(100vh-52px)] mb-0 md:mb-2 md:mb-2 md:w-[320px] md:my-0 md:mx-2 md:ml-0 bg-white md:rounded-none shadow">
   <div class="p-1 border-b md:p-2">
   <div class="flex flex-wrap items-center">
           <a href="/tags/12-bar-blues.html" class="px-2 py-1 text-xs uppercase">12-bar-blues (4)</a>
@@ -92,7 +92,7 @@
   <button class="focus:outline-none rounded-r h-[32px] border text-lg text-gray-500 hover:text-red-500 px-2" id="song_search_clear">&times;</button>
 </div>
 
-<div class="md:h-[calc(100vh-52px-44-48px)] px-1 md:px-2 sm:columns-3 columns-2 md:columns-auto pb-2 overflow-y-auto custom-scroll md:block">
+<div class="md:h-[calc(100vh-52px-32px-48px)] px-1 md:px-2 sm:columns-3 columns-2 md:columns-auto pb-2 overflow-y-auto custom-scroll md:block">
       <div class="flex items-start">
       
 
@@ -7976,7 +7976,8 @@ Hoo-ooh-hoo-ooh
   }
 
   key_signatures.forEach(link => link.addEventListener('click', function(e) {
-    var url = `${window.location.pathname}?key=${e.target.dataset.key}`;
+    const key = song_key === e.target.dataset.key ? 'roman' : e.target.dataset.key;
+    var url = `${window.location.pathname}?key=${key}`;
     if(use_jazz_symbols) {
       url += "&use_jazz_symbols";
     }
