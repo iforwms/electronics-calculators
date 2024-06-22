@@ -1333,14 +1333,14 @@ data-degree="5" class="chord_note">
 
 
       <span class="flex justify-center basic_chord">
-      <span data-roman="II"
+      <span data-roman="III"
 data-accidental=""
-data-arabic="2"
-data-solfege="re"
+data-arabic="3"
+data-solfege="mi"
 data-chord-symbol="7"
 data-chord-symbol-jazz="7"
-data-degree="1" class="chord_note">
-        II      </span>
+data-degree="2" class="chord_note">
+        III      </span>
       <sub class="chord_symbol top-[18px] text-[14px] left-[1px]">
         7      </sub>
     </span>
@@ -1484,7 +1484,7 @@ I can't leave you alone</pre>
       <div class="hidden p-1 md:p-2 print:hidden">
         <h3 class="text-sm anchor show_input_toggle">Show Input</h3>
         <div class="p-1 mt-1 text-sm border rounded md:p-2 song_raw_string">
-          <pre class="pb-1 overflow-x-auto md:pb-2 custom-scroll">|: vi7 vi7 iii7 iii7 vi7 vi7 ii ii vi7 II7 vi vi^ :|</pre>
+          <pre class="pb-1 overflow-x-auto md:pb-2 custom-scroll">|: vi7 vi7 iii7 iii7 vi7 vi7 ii ii vi7 III7 vi vi^ :|</pre>
         </div>
       </div>
     </div>
@@ -8723,7 +8723,7 @@ Zombie, zombie, zombie-ie-ie-ie, oh-oh-oh-oh-oh-oh-oh, eh-eh-oh, ra-ra
     }
     url += window.location.hash;
     window.history.pushState({},"", url);
-    set_key();
+    set_key(.e.target.value);
   });
 
   function set_key(song_key) {

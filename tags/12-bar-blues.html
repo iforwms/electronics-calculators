@@ -2280,7 +2280,7 @@ data-degree="4" class="chord_note">
     }
     url += window.location.hash;
     window.history.pushState({},"", url);
-    set_key();
+    set_key(.e.target.value);
   });
 
   function set_key(song_key) {
