@@ -27825,11 +27825,15 @@ Chorus -- |: [I III7] [vi IV] :| [I III7] [vi IV] I/v V V</pre>
   let use_jazz_symbols = params.has('use_jazz_symbols');
 
   document.addEventListener('scroll', e => {
+    let song_key = params.has('key') ? params.get('key') : 'roman';
     song_containers.forEach(ha => {
       const rect = ha.getBoundingClientRect();
       if(rect.top > 0 && rect.top < 150) {
         const location = window.location.toString().split('#')[0];
-        set_key(ha.querySelector('.key_signature').dataset.key);
+        const key = ha.querySelector('.key_signature').dataset.key;
+        if(!['outline', 'roman', 'arabic', 'solfege'].includes(song_key)) {
+          set_key(key);
+        }
         history.replaceState(null, null, location + '#' + ha.id);
         song_links.forEach(function(link) {
           if(link.hash !== `#${ha.id}`) {
@@ -27866,7 +27870,7 @@ Chorus -- |: [I III7] [vi IV] :| [I III7] [vi IV] I/v V V</pre>
     }
     url += window.location.hash;
     window.history.pushState({},"", url);
-    set_key();
+    set_key(key);
   }));
 
   key_select.addEventListener('change', function(e) {
@@ -27880,11 +27884,11 @@ Chorus -- |: [I III7] [vi IV] :| [I III7] [vi IV] I/v V V</pre>
   });
 
   function set_key(song_key) {
+    params = new URL(window.location.href).searchParams;
     if(!song_key) {
       song_key = params.has('key') ? params.get('key') : 'roman';
     }
 
-    params = new URL(window.location.href).searchParams;
     use_jazz_symbols = params.has('use_jazz_symbols');
     chord_symbol = use_jazz_symbols ? 'chordSymbolJazz' : 'chordSymbol';
 
