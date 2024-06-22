@@ -1490,6 +1490,7 @@ Verse -- |: vi V IV III7 :|</pre>
       const rect = ha.getBoundingClientRect();
       if(rect.top > 0 && rect.top < 150) {
         const location = window.location.toString().split('#')[0];
+        set_key(ha.querySelector('.key_signature').dataset.key);
         history.replaceState(null, null, location + '#' + ha.id);
         song_links.forEach(function(link) {
           if(link.hash !== `#${ha.id}`) {
@@ -1539,9 +1540,12 @@ Verse -- |: vi V IV III7 :|</pre>
     set_key();
   });
 
-  function set_key() {
+  function set_key(song_key) {
+    if(!song_key) {
+      song_key = params.has('key') ? params.get('key') : 'roman';
+    }
+
     params = new URL(window.location.href).searchParams;
-    song_key = params.has('key') ? params.get('key') : 'roman';
     use_jazz_symbols = params.has('use_jazz_symbols');
     chord_symbol = use_jazz_symbols ? 'chordSymbolJazz' : 'chordSymbol';
 
@@ -1551,8 +1555,6 @@ Verse -- |: vi V IV III7 :|</pre>
     song_outlines.forEach(song => song.classList.add('hidden'));
     song_chords.forEach(song => song.classList.remove('hidden'));
     use_jazz_symbols_container.classList.add('hidden');
-
-    /* console.log(`key: ${song_key}; use_jazz_symbols: ${use_jazz_symbols}`); */
 
     switch(song_key) {
       case 'outline':
