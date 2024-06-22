@@ -1496,9 +1496,9 @@ Verse -- |: vi V IV III7 :|</pre>
       if(rect.top > 0 && rect.top < 150) {
         const location = window.location.toString().split('#')[0];
         const key = ha.querySelector('.key_signature').dataset.key;
-        if(!['outline', 'roman', 'arabic', 'solfege'].includes(song_key)) {
-          set_key(key);
-        }
+        /* if(!['outline', 'roman', 'arabic', 'solfege'].includes(song_key)) { */
+        /*   set_key(key); */
+        /* } */
         history.replaceState(null, null, location + '#' + ha.id);
         song_links.forEach(function(link) {
           if(link.hash !== `#${ha.id}`) {
